@@ -59,3 +59,4 @@ function sendState() {
 }
 
 
+module.exports = { getCurrentState, setStateTo, changeState, state }
