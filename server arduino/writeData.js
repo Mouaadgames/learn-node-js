@@ -1,6 +1,9 @@
 const { readFileSync, writeFileSync } = require("fs")
-function save(data) {
-
+function save(data, flag) {
+    writeFileSync(
+        "./logs/numberOfPress.txt",
+        data,
+        { flag })
 }
 function getData() {
     let file = readFileSync("./logs/numberOfPress.txt", "utf-8")

@@ -1,3 +1,5 @@
+const { rejects } = require('assert')
+const { resolve } = require('path')
 const { SerialPort, ReadlineParser } = require('serialport')
 const port = new SerialPort({
     path: 'COM7',
@@ -6,6 +8,7 @@ const port = new SerialPort({
 
 const parser = new ReadlineParser()
 let state = 0
+let data
 try {
     port.pipe(parser)
     port.open(function (err) {
@@ -19,7 +22,7 @@ try {
     })
 
     parser.on("data", (line) => {
-        let data = line.slice(0, -1)
+        data = line.slice(0, -1)
 
         console.log(`the data geted: ${data}`)
         if (data === "ok") { //
@@ -43,20 +46,29 @@ try {
     //export those functions
     function changeState() {
         state = (state + 1) % 3
-        sendState()
+        return sendState()
+
     }
     function setStateTo(value) {
         state = value % 3
-        sendState()
+        return sendState()
     }
     function getCurrentState() {
-        port.write("get")
+        return state
+
+        // port.write("get")
+        // return new Promise((resolve, reject) => {
+        //     setTimeout(() => { resolve(state) }, 1000)
+        // })
     }
 
 
     function sendState() {
         console.log("send data:" + String(state))
         port.write(String(state))
+        return new Promise((res, rej) => {
+            setTimeout(() => { res("done") }, 1000)
+        })
     }
 
 } catch (error) {
