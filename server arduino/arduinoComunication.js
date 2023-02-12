@@ -1,4 +1,5 @@
 const { rejects } = require('assert')
+const { write } = require('fs')
 const { resolve } = require('path')
 const { SerialPort, ReadlineParser } = require('serialport')
 const port = new SerialPort({
@@ -8,7 +9,9 @@ const port = new SerialPort({
 
 const parser = new ReadlineParser()
 let state = 0
+let lightState = true;
 let data
+let comuncationIsStarted = false
 try {
     port.pipe(parser)
     port.open(function (err) {
@@ -24,61 +27,80 @@ try {
     parser.on("data", (line) => {
         data = line.slice(0, -1)
 
-        console.log(`the data geted: ${data}`)
-        if (data === "ok") { //
+        console.log(`arduino: ${data}`)
+        if (data === "ok") { // comunication is started
             getCurrentState()
+            comuncationIsStarted = true
         }
-        else if (data === "0" || data === "1" || data === "2") {
+        if (data === "0" || data === "1" || data === "2") {
             state = parseInt(data)
             console.log(`the state var: ${state}`)
+            GetLightState()
+        }
+        if (data === "on" || data === "off") {
+            lightState = data === "on" // yes == true else false and its false
         }
         if (data === "k") {
 
-            console.log(`data send: start`)
+            console.log(`start comuncation: start`)
             port.write("start")
         }
 
 
     })
 
+    let allReadyWitten = false
+    function GetLightState() {
+        return lightState
+    }
 
+    function toggleLightState() {
+        return Write("toggleLight")
+    }
 
+    function buzzer() {
+        return Write("buzzer")
+    }
     //export those functions
+    // first not used 
     function changeState() {
         state = (state + 1) % 3
-        return sendState()
-
+        return Write(state)
     }
+
     function setStateTo(value) {
         state = value % 3
-        return sendState()
+        return Write(state)
     }
+
     function getCurrentState() {
+        Write("get")
         return state
 
-        // port.write("get")
         // return new Promise((resolve, reject) => {
         //     setTimeout(() => { resolve(state) }, 1000)
         // })
     }
 
-    let allReadyWitten = false
-    function sendState() {
-        if (!allReadyWitten) {
-            console.log("send data:" + String(state))
-            port.write(String(state))
+    function Write(dataToWrite) {
+        if (!allReadyWitten && comuncationIsStarted) {
+            console.log("mouaad: " + dataToWrite)
+            port.write(String(dataToWrite))
             allReadyWitten = true
             return new Promise((res, rej) => {
                 //need better way to check
                 setTimeout(() => {
                     res("done")
                     allReadyWitten = false
-                }, 1000)
+                }, 2000)
             })
+        }
+        else {
+            return "too fast for the arduino"
         }
     }
 
 } catch (error) {
 }
 
-module.exports = { getCurrentState, setStateTo, changeState, state }
+module.exports = { getCurrentState, setStateTo, changeState, toggleLightState, GetLightState, buzzer }

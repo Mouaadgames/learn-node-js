@@ -14,6 +14,15 @@
     gap: 10px;
 }
 
+.otherRapper {
+    display: flex;
+    justify-content: space-around;
+}
+.otherRapper>.selectButtons {
+    height: 4.5em;
+    width: 10em;
+}
+
 
 .selectButtons {
     background-color: gray;
@@ -51,4 +60,5 @@ h1 {
 .container {
     display: flex;
     justify-content: space-evenly;
+    background-color: #005a05;
 }

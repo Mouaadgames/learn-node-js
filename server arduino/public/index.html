@@ -12,10 +12,10 @@
 
 <body>
     <h1>Welcom to the smart Lamp Dash Board</h1>
-    <div class="container">    
-        <button class="getD" onclick="getData()">Get DATA</button>
+    <div class="container">
+        <button class="getD" onclick="getStateData()">Get DATA</button>
         <!-- blue : 0 ; green : 1 ; red : 2 -->
-        
+
         <div class="LEDState"></div>
     </div>
     <br>
@@ -23,6 +23,11 @@
         <button class="selectButtons" onclick="setDataTo(0)">Blue</button>
         <button class="selectButtons" onclick="setDataTo(1)">Green</button>
         <button class="selectButtons" onclick="setDataTo(2)">Red</button>
+    </div>
+    <br>
+    <div class="otherRapper">
+        <button onclick="buzzer()" class="selectButtons buzzer">Buzzer</button>
+        <button onclick="toggleLightState()" class="selectButtons mainLight">Main Light</button>
     </div>
 </body>
 
