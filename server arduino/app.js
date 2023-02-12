@@ -1,28 +1,18 @@
-const arduinoCom = require("./arduinoComunication")
+const ardCom = require("./arduinoComunication")
 const express = require("express")
-const fl = require("./writeData.js")
+const path = require('path')
 const app = express()
-//the get status page
-app.get("/", (req, res) => {
-    res.send(`hello, world! ${arduinoCom.getCurrentState()}`)
-    // .then((respond) => {
-    //     res.send(`hello, world! ${ respond }`)
-    // })
-
+app.use(express.static("./public"))
+app.get('/api/ledState', async function (req, res) {
+    let LEDState = ardCom.getCurrentState()
+    res.json({ status: LEDState })
 })
-//the change page
-app.get("/change", (req, res) => {
-    arduinoCom.changeState().then((sta) => {
-        res.send(`hello, world! ${sta}`)
-    })
-    // .then((respond) => {
-    //     res.send(`hello, world! ${ respond }`)
-    // })   
+app.get('/api/setStateTo/:sta', async function (req, res) {
+    let sta = req.params.sta
+    const isDone = await ardCom.setStateTo(Number(sta))
+    res.json({ stateOfRequest: isDone })
 })
-
 app.all("*", (req, res) => {
-    res.status(404).send("<h1>Not Found</h1>")
+    res.sendFile(path.resolve(__dirname, './public/notFound.html'))
 })
-app.listen(2999, () => {
-    console.log("start listening at 2999")
-})
+app.listen(2999, () => { console.info("I'm listening at 2999") })

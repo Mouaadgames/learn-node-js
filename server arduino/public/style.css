@@ -1,0 +1,54 @@
+.LEDState {
+    height: 100px;
+    width: 100px;
+    /* margin-inline: auto; */
+    background-color: #fff;
+    border: brown solid 10px;
+    border-radius: 15px;
+}
+
+.rapper {
+    display: grid;
+    height: 2em;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+
+.selectButtons {
+    background-color: gray;
+    border-radius: 5px;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: larger;
+}
+
+body {
+    background-color: #333;
+}
+
+h1 {
+    color: rgb(254, 184, 254);
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.getD {
+    height: 50px;
+    width: 100px;
+    border-radius: 10px;
+    margin-block: auto;
+    background-color: #AAA;
+    font-weight: bolder;
+    color: rgb(255, 185, 255);
+    text-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+        rgba(0, 0, 0, .25) 0px -12px 30px,
+        rgba(0, 0, 0, .25) 0px 4px 6px,
+        rgba(0, 0, 0, .25) 0px 12px 13px,
+        rgba(0, 0, 0, .25) 0px -3px 5px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-evenly;
+}

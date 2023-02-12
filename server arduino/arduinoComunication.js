@@ -62,13 +62,20 @@ try {
         // })
     }
 
-
+    let allReadyWitten = false
     function sendState() {
-        console.log("send data:" + String(state))
-        port.write(String(state))
-        return new Promise((res, rej) => {
-            setTimeout(() => { res("done") }, 1000)
-        })
+        if (!allReadyWitten) {
+            console.log("send data:" + String(state))
+            port.write(String(state))
+            allReadyWitten = true
+            return new Promise((res, rej) => {
+                //need better way to check
+                setTimeout(() => {
+                    res("done")
+                    allReadyWitten = false
+                }, 1000)
+            })
+        }
     }
 
 } catch (error) {

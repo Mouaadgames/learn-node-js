@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouaad Web site</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="./index.js"></script>
+</head>
+
+<body>
+    <h1>Welcom to the smart Lamp Dash Board</h1>
+    <div class="container">    
+        <button class="getD" onclick="getData()">Get DATA</button>
+        <!-- blue : 0 ; green : 1 ; red : 2 -->
+        
+        <div class="LEDState"></div>
+    </div>
+    <br>
+    <div class="rapper">
+        <button class="selectButtons" onclick="setDataTo(0)">Blue</button>
+        <button class="selectButtons" onclick="setDataTo(1)">Green</button>
+        <button class="selectButtons" onclick="setDataTo(2)">Red</button>
+    </div>
+</body>
+
+</html>
